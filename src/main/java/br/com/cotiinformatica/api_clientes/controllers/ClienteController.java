@@ -13,10 +13,9 @@ import br.com.cotiinformatica.api_clientes.dtos.ClienteRequest;
 import br.com.cotiinformatica.api_clientes.entities.Cliente;
 import br.com.cotiinformatica.api_clientes.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
@@ -49,6 +48,20 @@ public class ClienteController {
         }
         catch (Exception e){
             return "Falha ao inserir cliente: " + e.getMessage();
+        }
+
+    }
+
+    @GetMapping("{nome}")
+    public List<Cliente> get(@PathVariable String nome) {
+
+        try{
+            //Consultar os clientes pelo nome e retornar a lista obtida do banco
+            return clienteRepository.obterPorNome(nome);
+        }
+        catch (Exception e){
+            e.printStackTrace(); //Exibir o log do erro no terminal do IntelliJ
+            return null;
         }
 
     }
